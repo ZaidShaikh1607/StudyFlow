@@ -25,7 +25,7 @@ No install, API key, login, or backend is required.
 - Persistent dark/light theme and data through `localStorage`
 - Sample demo data, reset control, responsive mobile layout, keyboard-friendly controls, and optional browser notifications
 
-## Hackathon demo script (about 90 seconds)
+## demo script (about 90 seconds)
 
 1. Open **Today** and point out the live next-class status plus the weekly progress card.
 2. Scroll to **Your timetable**. Click a coloured class block to show editing, then add a new class (try an overlap to demonstrate friendly validation).
