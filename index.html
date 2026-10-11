@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="StudyFlow — a focused weekly timetable and study planner." />
+  <title>StudyFlow — Plan calm. Study smarter.</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <a href="#today" class="brand" aria-label="StudyFlow home"><span class="brand-mark">✦</span><span>Study<span>Flow</span></span></a>
+      <nav aria-label="Main navigation">
+        <a href="#today" class="nav-link active">Today</a>
+        <a href="#timetable" class="nav-link">Timetable</a>
+        <a href="#tasks" class="nav-link">Tasks</a>
+        <a href="#planner" class="nav-link">Study plan</a>
+      </nav>
+      <div class="header-actions">
+        <button id="notifyBtn" class="icon-button" type="button" aria-label="Enable class notifications" title="Enable notifications">◌</button>
+        <button id="themeToggle" class="icon-button" type="button" aria-label="Switch to dark mode" title="Toggle colour mode">☾</button>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section id="today" class="hero section-anchor">
+        <div>
+          <p class="eyebrow" id="greeting">GOOD MORNING</p>
+          <h1>Make room for<br><em>what matters.</em></h1>
+          <p class="hero-copy">Your calm command centre for classes, deadlines, and your next focused study session.</p>
+        </div>
+        <div class="date-card"><span id="todayDate"></span><strong id="todayDay"></strong><span id="todayMonth"></span></div>
+      </section>
+
+      <section class="dashboard-grid" aria-label="Today overview">
+        <article class="next-card card">
+          <div class="card-heading"><div><p class="eyebrow">UP NEXT</p><h2 id="nextTitle">A clear afternoon</h2></div><span class="pulse-dot" aria-hidden="true"></span></div>
+          <div id="nextDetails" class="next-details"><p>Nothing else is scheduled for today.</p></div>
+          <p id="nextStatus" class="status-pill calm">Enjoy the breathing room</p>
+        </article>
+        <article class="progress-card card">
+          <p class="eyebrow">THIS WEEK</p>
+          <div class="progress-main"><strong id="weeklyProgress">0%</strong><span>tasks complete</span></div>
+          <div class="progress-track"><span id="progressBar"></span></div>
+          <p id="progressCaption" class="muted">Add a task to get started.</p>
+        </article>
+      </section>
+
+      <section class="content-section today-list-section">
+        <div class="section-heading"><div><p class="eyebrow">YOUR DAY</p><h2>Today’s rhythm</h2></div><button id="jumpAddClass" class="text-button" type="button">+ Add class</button></div>
+        <div id="todayClasses" class="today-classes"></div>
+      </section>
+
+      <section id="timetable" class="content-section section-anchor">
+        <div class="section-heading"><div><p class="eyebrow">WEEK AT A GLANCE</p><h2>Your timetable</h2></div><div class="section-actions"><button id="addClassBtn" class="primary-button" type="button">+ Add class</button><button id="resetDemoBtn" class="secondary-button" type="button">Reset demo data</button></div></div>
+        <div class="timetable-wrap" tabindex="0" aria-label="Weekly timetable. Scroll horizontally for all days.">
+          <div id="timetableGrid" class="timetable-grid"></div>
+        </div>
+        <p class="helper-text">Click a class to edit it. Timetable runs from 8:00 AM to 8:00 PM.</p>
+      </section>
+
+      <section id="tasks" class="content-section section-anchor">
+        <div class="section-heading"><div><p class="eyebrow">DEADLINES, WITHOUT THE DREAD</p><h2>Assignments & exams</h2></div><button id="addTaskBtn" class="primary-button" type="button">+ Add task</button></div>
+        <div class="tasks-layout"><div id="taskList" class="task-list"></div><aside class="task-aside"><span class="aside-icon">✺</span><h3>One thing at a time.</h3><p>Turn the next deadline into a small, practical plan when you’re ready.</p><a href="#planner" class="text-button">Create a plan →</a></aside></div>
+      </section>
+
+      <section id="planner" class="content-section section-anchor planner-section">
+        <div class="section-heading"><div><p class="eyebrow">FOCUS, MADE CONCRETE</p><h2>Study-plan generator</h2></div></div>
+        <div class="planner-layout">
+          <form id="planForm" class="plan-form card" novalidate>
+            <p>Choose a deadline and the time you can protect. We’ll turn it into a gentle daily checklist.</p>
+            <label for="planTask">What are you planning for?</label><select id="planTask" required></select>
+            <label for="studyHours">Available study hours</label><div class="hours-row"><input id="studyHours" type="number" min="1" max="80" value="6" required /><span>hours total</span></div>
+            <button class="primary-button full-button" type="submit">Build my plan</button>
+            <p id="planError" class="form-error" aria-live="polite"></p>
+          </form>
+          <div id="planOutput" class="plan-output card" aria-live="polite"><div class="empty-illustration">✦</div><h3>A plan with a pulse</h3><p>Select an assignment or exam to create a paced checklist around its due date.</p></div>
+        </div>
+      </section>
+    </main>
+    <footer>Built for the late-night learners and the early starters. <span>StudyFlow</span></footer>
+  </div>
+
+  <dialog id="classDialog" class="modal"><form id="classForm" method="dialog" novalidate><div class="modal-header"><div><p class="eyebrow" id="classModalEyebrow">NEW BLOCK</p><h2 id="classModalTitle">Add a class</h2></div><button class="close-button" type="button" data-close="classDialog" aria-label="Close">×</button></div><input id="classId" type="hidden" /><div class="form-grid"><label>Subject<input id="classSubject" maxlength="50" required placeholder="e.g. Organic Chemistry" /></label><label>Day<select id="classDay" required></select></label><label>Start time<input id="classStart" type="time" min="08:00" max="20:00" required /></label><label>End time<input id="classEnd" type="time" min="08:00" max="20:00" required /></label><label class="wide">Room or meeting link<input id="classLocation" maxlength="100" required placeholder="e.g. Science Hall 204 or meet.google.com/..." /></label><fieldset class="wide"><legend>Colour</legend><div id="colourChoices" class="colour-choices"></div></fieldset></div><p id="classError" class="form-error" aria-live="polite"></p><div class="modal-actions"><button id="deleteClassBtn" type="button" class="danger-button hidden">Delete class</button><span></span><button class="secondary-button" type="button" data-close="classDialog">Cancel</button><button class="primary-button" type="submit">Save class</button></div></form></dialog>
+
+  <dialog id="taskDialog" class="modal"><form id="taskForm" method="dialog" novalidate><div class="modal-header"><div><p class="eyebrow" id="taskModalEyebrow">NEW DEADLINE</p><h2 id="taskModalTitle">Add a task</h2></div><button class="close-button" type="button" data-close="taskDialog" aria-label="Close">×</button></div><input id="taskId" type="hidden" /><div class="form-grid"><label class="wide">Title<input id="taskTitle" maxlength="70" required placeholder="e.g. Cognitive psychology essay" /></label><label>Subject<input id="taskSubject" maxlength="50" required placeholder="e.g. Psychology" /></label><label>Due date<input id="taskDue" type="date" required /></label><label>Priority<select id="taskPriority"><option value="high">High priority</option><option value="medium" selected>Medium priority</option><option value="low">Low priority</option></select></label><label>Type<select id="taskType"><option value="assignment">Assignment</option><option value="exam">Exam</option></select></label></div><p id="taskError" class="form-error" aria-live="polite"></p><div class="modal-actions"><button id="deleteTaskBtn" type="button" class="danger-button hidden">Delete task</button><span></span><button class="secondary-button" type="button" data-close="taskDialog">Cancel</button><button class="primary-button" type="submit">Save task</button></div></form></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
